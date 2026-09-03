@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(uuid())
+  email        String         @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime       @default(now())
+  progress     UserProgress[]
+}
+
+model Role {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String
+  questions   Question[]
+}
+
+model Category {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  questions Question[]
+}
+
+model Question {
+  id         String         @id @default(uuid())
+  text       String
+  difficulty String
+  roleId     String
+  categoryId String
+  role       Role           @relation(fields: [roleId], references: [id])
+  category   Category       @relation(fields: [categoryId], references: [id])
+  progress   UserProgress[]
+}
+
+model UserProgress {
+  id           String    @id @default(uuid())
+  userId       String
+  questionId   String
+  status       String    @default("not_started") // not_started | needs_work | mastered
+  notes        String?
+  lastReviewed DateTime?
+  nextReview   DateTime?
+  user         User      @relation(fields: [userId], references: [id])
+  question     Question  @relation(fields: [questionId], references: [id])
+
+  @@unique([userId, questionId])
+}
