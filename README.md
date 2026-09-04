@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PrepPath — Role-Based Interview Prep
 
-## Getting Started
+A full-stack web app for practicing interview questions curated by job role (SWE, AI/ML, Product), with per-user progress tracking and spaced repetition.
 
-First, run the development server:
+## Live demo
+https://interview-prep-px42.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Why I built this
+As a CS grad job-hunting for Associate SWE / AI-ML roles, I wanted a single place to practice role-specific questions instead of scattered spreadsheets and browser tabs. Built as a portfolio project to demonstrate full-stack skills: relational schema design, JWT auth, REST API design, and deployment.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech stack
+- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Backend:** Next.js API routes (REST)
+- **Database:** PostgreSQL (Supabase), Prisma ORM
+- **Auth:** JWT + bcrypt password hashing
+- **Deployment:** Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
+- Role-based question filtering (SWE / AI-ML / Product, extensible)
+- User auth (signup/login) with hashed passwords and JWT sessions
+- Per-user progress tracking (`not_started` / `needs_work` / `mastered`)
+- Spaced-repetition scheduling: "needs work" resurfaces sooner than "mastered"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running locally
+1. Clone the repo and run `npm install`
+2. Create a `.env` file with `DATABASE_URL` and `JWT_SECRET`
+3. Run `npx prisma db push && npx prisma db seed`
+4. Run `npm run dev`
 
-## Learn More
+## Schema
+See `prisma/schema.prisma` — four core models (`User`, `Role`, `Question`, `UserProgress`) with `UserProgress` as a join table driving both progress tracking and the review-scheduling logic.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Roadmap
+- Timer-based mock interview mode
+- Community-submitted questions with moderation
+- Weak-area analytics dashboard

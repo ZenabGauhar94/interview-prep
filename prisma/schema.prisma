@@ -30,14 +30,16 @@ model Category {
 }
 
 model Question {
-  id         String         @id @default(uuid())
-  text       String
-  difficulty String
-  roleId     String
-  categoryId String
-  role       Role           @relation(fields: [roleId], references: [id])
-  category   Category       @relation(fields: [categoryId], references: [id])
-  progress   UserProgress[]
+  id          String         @id @default(uuid())
+  text        String
+  description String?
+  example     String?
+  difficulty  String
+  roleId      String
+  categoryId  String
+  role        Role           @relation(fields: [roleId], references: [id])
+  category    Category       @relation(fields: [categoryId], references: [id])
+  progress    UserProgress[]
 }
 
 model UserProgress {
